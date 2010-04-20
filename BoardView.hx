@@ -1,5 +1,7 @@
 
 import flash.display.Sprite;
+import flash.display.DisplayObject;
+
 import flash.net.NetStream;
 
 class BoardView extends Sprite, implements Game
@@ -13,8 +15,11 @@ class BoardView extends Sprite, implements Game
 	var output:NetStream;
 	
 	var myPlayer:UInt;
+	public var miner:Bool;
 	
 	var seed:UInt;
+	
+	public dynamic function onGameOver():Void;
 	
 	public function new(input:NetStream,output:NetStream, myPlayer:UInt)
 	{
@@ -26,29 +31,33 @@ class BoardView extends Sprite, implements Game
 		this.myPlayer=myPlayer;
 
 		input.client.startGame=startGame;
-		input.client.flag=flag;
-		input.client.mine=mine;
+
 
 		seed=Std.random(2000000000);
 
 		output.send("startGame",seed);
 
-		Main.stage.addChild(this);
-
-
-
 	}
 	
 	private function startGame(seed:UInt)
 	{
+
+		miner=seed>this.seed;
 		
-		trace([seed,this.seed]);
+		if(miner)
+		{
+			input.client.flag=flag;
+		}
+		else
+		{
+			input.client.mine=mine;
+		}
 		
 		this.seed^=seed;
 		
 		input.client.startGame=null;
 		
-		board=new Board(30,20,20*2,this.seed);
+		board=new Board(30,20,20*4,this.seed);
 		redraw();
 		
 		height=Main.stage.stageHeight;
@@ -136,9 +145,24 @@ class BoardView extends Sprite, implements Game
 		
 	}
 
+	public function getDisplayObject():DisplayObject
+	{
+		return this;
+	}
+
+	public function die()
+	{
+		mouseChildren=false;
+		onGameOver();
+	}
+
 	public function destroy()
 	{
-		parent.removeChild(this);
+		input.client={};
+		
+		if(parent!=null)
+			parent.removeChild(this);
+			
 	}
 	
 }

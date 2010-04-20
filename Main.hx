@@ -7,8 +7,6 @@ class Main
 
 	public static var stage:Stage;
 
-	public static var notify:Notify;
-
     static public function main()
     {
 
@@ -22,14 +20,6 @@ class Main
 		
 		stage.addChild(new Lobby(BoardView));
 		
-		notify=new Notify();
-		notify.y=stage.stageHeight;
-		stage.addChild(notify);
-
-
-
-
-
     }
     
 }

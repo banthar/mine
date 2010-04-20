@@ -62,6 +62,10 @@ class Lobby extends Sprite
 				listen();
 			case "NetStream.Connect.Success":
 				trace("stratusStatus NetStream.Connect.Success");
+				if(event.info.stream != server && event.info.stream != client)
+				{
+					trace("unknown");
+				}
 			case "NetStream.Connect.Closed":
 				if(event.info.stream == server || event.info.stream == client)
 				{
@@ -168,14 +172,42 @@ class Lobby extends Sprite
 		}
 	}
 
-	private function startGame()
+	private function startGame(?_)
 	{
 		trace("startGame "+myId);
 		
 		clear();
 		
 		game=Type.createInstance(game_class,[client,server,myId]);
-		//addChild(board);
+		
+		game.onGameOver=onGameOver;
+		
+		addChild(game.getDisplayObject());
+	}
+
+	private function onGameOver()
+	{
+		if(game!=null)
+		{
+			removeChild(game.getDisplayObject());
+			game.destroy();
+			game=null;
+		}
+		
+		clear();
+		
+		addLabel("Game Over",24);
+
+		addLabel("\n",24);
+		
+		addLabel("Restart",24,startGame);
+
+		var t=this;
+
+		addLabel("Disconnect",24,function(_){t.reset();t.drawEnterID();});
+		
+		organise();
+		
 	}
 
 // UI
@@ -308,13 +340,14 @@ class Lobby extends Sprite
 		
 	}
 
-	private function reset()
+	private function reset(?_)
 	{
 		
 		myId=0;
 		
 		if(game!=null)
 		{
+			removeChild(game.getDisplayObject());
 			game.destroy();
 			game=null;
 		}
@@ -329,13 +362,12 @@ class Lobby extends Sprite
 			client=null;
 		}
 		
-		/*
 		if(server!=null)
 		{
-			server.client={};
-			server.client.onPeerConnect=onPeerConnect;
+//			server.close();
+//			server.client={};
+//			server.client.onPeerConnect=onPeerConnect;
 		}
-		*/
 	}
 
 }

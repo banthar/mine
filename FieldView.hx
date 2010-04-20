@@ -31,9 +31,15 @@ class FieldView extends Sprite
 		mouseChildren=false;
 		buttonMode=true;
 
-		addEventListener(MouseEvent.CLICK,onClick);
-		addEventListener(MouseEvent.MOUSE_WHEEL,onMouseWhell);
-		addEventListener(MouseEvent.DOUBLE_CLICK,onDoubleClick);
+		if(board_view.miner)
+		{
+			addEventListener(MouseEvent.CLICK,onClick);
+			addEventListener(MouseEvent.DOUBLE_CLICK,onDoubleClick);
+		}
+		else
+		{
+			addEventListener(MouseEvent.CLICK,onMouseWhell);
+		}
 
 
 
@@ -120,7 +126,7 @@ class FieldView extends Sprite
 		
 		if(field.bomb)
 		{
-			Main.notify.add("Boom !!!");
+			board_view.die();
 			addChild(Utils.load("mine"));
 		}
 		else if(field.neighbours!=0)
