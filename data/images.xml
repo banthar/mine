@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<movie version="10">
+	<frame>
+		<clip import="data/images.svg"/>
+	</frame>
+</movie>
