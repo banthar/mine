@@ -29,6 +29,8 @@ class Lobby extends Sprite
 	var game_class:Class<Game>;
 	var game:Game;
 	
+	var wantsRestart:Bool;
+	
 	public function new(game_class:Class<Game>)
 	{
 		
@@ -62,10 +64,6 @@ class Lobby extends Sprite
 				listen();
 			case "NetStream.Connect.Success":
 				trace("stratusStatus NetStream.Connect.Success");
-				if(event.info.stream != server && event.info.stream != client)
-				{
-					trace("unknown");
-				}
 			case "NetStream.Connect.Closed":
 				if(event.info.stream == server || event.info.stream == client)
 				{
@@ -187,6 +185,9 @@ class Lobby extends Sprite
 
 	private function onGameOver()
 	{
+		
+		var t=this;
+		
 		if(game!=null)
 		{
 			removeChild(game.getDisplayObject());
@@ -200,14 +201,42 @@ class Lobby extends Sprite
 
 		addLabel("\n",24);
 		
-		addLabel("Restart",24,startGame);
+		wantsRestart=false;
+		
+		addLabel("Restart",24,onRestart);
 
-		var t=this;
 
-		addLabel("Disconnect",24,function(_){t.reset();t.drawEnterID();});
+		client.client.restart=restart;
+		client.client.disconnect=disconnect;
+
+		addLabel("Disconnect",24,function(_){t.server.send("disconnect");t.disconnect();});
 		
 		organise();
 		
+	}
+
+	private function onRestart(_)
+	{
+		disableLabel(cast(getChildByName("Restart")));
+		server.send("restart");
+		restart();
+		
+	}
+
+	private function restart()
+	{
+		
+		if(wantsRestart)
+			startGame();
+		else
+			wantsRestart=true;
+		
+	}
+
+	private function disconnect()
+	{
+		reset();
+		drawEnterID();
 	}
 
 // UI
@@ -223,18 +252,26 @@ class Lobby extends Sprite
 		}
 	}
 
+	private function disableLabel(label:Sprite)
+	{
+		label.mouseEnabled=false;
+		label.alpha=0.7;
+	}
+
 	private function addLabel(text:String,size:Float,?c:Dynamic->Void)
 	{
 		var text_field=new TextField();
 		text_field.defaultTextFormat=new TextFormat("Arial",size);
 		text_field.text=text;
 		text_field.autoSize=flash.text.TextFieldAutoSize.CENTER;
-
+		text_field.name=text;
+		
 		if(c!=null)
 		{
 			
 			var s=new Sprite();
 			
+			s.name=text;
 			s.mouseChildren=false;
 			s.buttonMode=true;
 			
