@@ -26,6 +26,8 @@ class BoardView extends Sprite, implements Game
 		this.myPlayer=myPlayer;
 
 		input.client.startGame=startGame;
+		input.client.flag=flag;
+		input.client.mine=mine;
 
 		seed=Std.random(2000000000);
 
@@ -60,11 +62,17 @@ class BoardView extends Sprite, implements Game
 	public function onClick(x:Int,y:Int)
 	{
 		mine(x,y);
+		
+		output.send("mine",x,y);
+		
 	}
 	
 	public function onFlagClick(x:Int,y:Int)
 	{
 		flag(x,y);
+		
+		output.send("flag",x,y);
+		
 	}
 	
 	public function flag(x:Int,y:Int)
