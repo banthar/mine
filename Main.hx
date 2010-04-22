@@ -6,7 +6,8 @@ class Main
 {
 
 	public static var stage:Stage;
-
+	var frame:Frame;
+	
     static public function main()
     {
 

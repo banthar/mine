@@ -14,16 +14,15 @@ description=
 run_cmd=
 
 [files]
-current_page=1
-FILE_NAME_0=387;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/Main.hx;0
-FILE_NAME_1=458;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/Board.hx;0
-FILE_NAME_2=248;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/Array2D.hx;0
-FILE_NAME_3=860;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/Notify.hx;0
-FILE_NAME_4=320;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/BoardView.hx;0
+current_page=7
+FILE_NAME_0=113;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/Main.hx;0
+FILE_NAME_1=231;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/Board.hx;0
+FILE_NAME_2=860;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/Notify.hx;0
+FILE_NAME_3=2257;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/BoardView.hx;0
+FILE_NAME_4=1982;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/FieldView.hx;0
 FILE_NAME_5=582;Haxe;0;16;1;1;0;/home/piotr/projekty/multi/Log.hx;0
-FILE_NAME_6=121;Haxe;0;16;1;1;0;/home/piotr/projekty/multi/Board.hx;0
-FILE_NAME_7=2060;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/FieldView.hx;0
-FILE_NAME_8=5483;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/Lobby.hx;0
-FILE_NAME_9=49;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/Game.hx;0
-FILE_NAME_10=131;Make;0;16;1;1;0;/home/piotr/projekty/mine/Makefile;0
-FILE_NAME_11=366;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/Random.hx;0
+FILE_NAME_6=3627;Haxe;0;16;1;1;0;/home/piotr/projekty/multi/Board.hx;0
+FILE_NAME_7=4075;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/Lobby.hx;0
+FILE_NAME_8=98;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/Game.hx;0
+FILE_NAME_9=131;Make;0;16;1;1;0;/home/piotr/projekty/mine/Makefile;0
+FILE_NAME_10=366;Haxe;0;16;1;1;0;/home/piotr/projekty/mine/Random.hx;0

@@ -262,9 +262,10 @@ class Lobby extends Sprite
 	{
 		var text_field=new TextField();
 		text_field.defaultTextFormat=new TextFormat("Arial",size);
-		text_field.text=text;
 		text_field.autoSize=flash.text.TextFieldAutoSize.CENTER;
+		text_field.text=text;
 		text_field.name=text;
+		text_field.border=true;
 		
 		if(c!=null)
 		{
