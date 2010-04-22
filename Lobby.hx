@@ -13,7 +13,7 @@ import flash.text.TextFormat;
 
 import flash.geom.Rectangle;
 
-class Lobby extends Sprite
+class Lobby extends Frame
 {
 
 	var stratus:NetConnection;
@@ -203,13 +203,13 @@ class Lobby extends Sprite
 		
 		wantsRestart=false;
 		
-		addLabel("Restart",24,onRestart);
+		addButton("Restart",24,onRestart);
 
 
 		client.client.restart=restart;
 		client.client.disconnect=disconnect;
 
-		addLabel("Disconnect",24,function(_){t.server.send("disconnect");t.disconnect();});
+		addButton("Disconnect",24,function(_){t.server.send("disconnect");t.disconnect();});
 		
 		organise();
 		
@@ -255,65 +255,7 @@ class Lobby extends Sprite
 	private function disableLabel(label:Sprite)
 	{
 		label.mouseEnabled=false;
-		label.alpha=0.7;
-	}
-
-	private function addLabel(text:String,size:Float,?c:Dynamic->Void)
-	{
-		var text_field=new TextField();
-		text_field.defaultTextFormat=new TextFormat("Arial",size);
-		text_field.autoSize=flash.text.TextFieldAutoSize.CENTER;
-		text_field.text=text;
-		text_field.name=text;
-		text_field.border=true;
-		
-		if(c!=null)
-		{
-			
-			var s=new Sprite();
-			
-			s.name=text;
-			s.mouseChildren=false;
-			s.buttonMode=true;
-			
-			s.addChild(text_field);
-			addChild(s);
-			
-			s.addEventListener(MouseEvent.CLICK,c);
-			
-		}
-		else
-		{
-			addChild(text_field);
-		}
-		
-		return text_field;
-		
-	}
-
-
-	private function organise()
-	{
-		var h=0.0;
-		
-		for(i in 0...numChildren)
-		{
-			h+=4;
-			h+=getChildAt(i).height;
-		}
-		
-		var ypos=(Main.stage.stageHeight-h)/2.0;
-		
-		for(i in 0...numChildren)
-		{
-			var c=getChildAt(i);
-			
-			c.x=(Main.stage.stageWidth-c.width)/2;
-			c.y=ypos;
-			ypos+=c.height+4;
-			
-		}
-		
+		label.alpha=0.2;
 	}
 
 	private function drawConnecting()
@@ -358,7 +300,7 @@ class Lobby extends Sprite
 		addLabel("\n",24);
 
 		
-		addLabel("Connect",24,onConnectPress);
+		addButton("Connect",24,onConnectPress);
 		
 		organise();
 		
