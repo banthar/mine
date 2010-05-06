@@ -8,11 +8,22 @@ import flash.text.TextFieldType;
 import flash.text.TextFormat;
 
 import flash.geom.Rectangle;
+import flash.geom.Point;
+import flash.geom.ColorTransform;
+
+import flash.filters.BlurFilter;
 
 class Frame extends Sprite
 {
 
 	var previousFrame:Frame;
+	
+	public function new()
+	{
+		
+		super();
+		
+	}
 	
 	public function show(frame:Frame)
 	{
@@ -21,7 +32,7 @@ class Frame extends Sprite
 		
 		parent.removeChild(this);
 		parent.addChild(frame);
-		
+
 	}
 	
 	public function showDialog(frame:Frame)
@@ -46,7 +57,7 @@ class Frame extends Sprite
 		
 	}
 
-	override public function addEventListener(type, listener, ?useCapture=false, ?priority=0, ?useWeakReference=true)
+	override public function addEventListener(type, listener, useCapture=false, priority=0, useWeakReference=true)
 	{
 		return super.addEventListener(type,listener,useCapture,priority,useWeakReference);
 	}
@@ -57,6 +68,10 @@ class Frame extends Sprite
 		
 		for(i in 0...numChildren)
 		{
+			
+			if(getChildAt(i).z<0.0)
+				continue;
+		
 			h+=4;
 			h+=getChildAt(i).height;
 		}
@@ -66,6 +81,9 @@ class Frame extends Sprite
 		for(i in 0...numChildren)
 		{
 			var c=getChildAt(i);
+			
+			if(c.z<0.0)
+				continue;
 			
 			c.x=(Main.stage.stageWidth-c.width)/2;
 			c.y=ypos;
@@ -137,6 +155,18 @@ class Frame extends Sprite
 		
 		showDialog(message_box);
 
+	}
+
+	public function clear()
+	{
+		
+		graphics.clear();
+		
+		while(numChildren>0)
+		{
+			removeChildAt(numChildren-1);
+		}
+		
 	}
 
 	public function destroy()

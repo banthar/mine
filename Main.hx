@@ -7,6 +7,7 @@ class Main
 
 	public static var stage:Stage;
 	var frame:Frame;
+	public static var kongregate;
 	
     static public function main()
     {
@@ -19,7 +20,14 @@ class Main
 
 		//new BoardView(null,null,0);
 		
-		stage.addChild(new Lobby(BoardView));
+		kongregate=new Kongregate();
+		
+		var lobby=new Lobby(BoardView);
+		
+		lobby.updateBackground();
+		
+		stage.addChild(lobby);
+		
 		
     }
     

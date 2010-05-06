@@ -1,5 +1,7 @@
 
 import flash.display.Sprite;
+import flash.display.BitmapData;
+import flash.display.Bitmap;
 
 import flash.net.NetConnection;
 import flash.net.NetStream;
@@ -12,9 +14,15 @@ import flash.text.TextFieldType;
 import flash.text.TextFormat;
 
 import flash.geom.Rectangle;
+import flash.geom.Point;
+import flash.geom.ColorTransform;
+
+import flash.filters.BlurFilter;
 
 class Lobby extends Frame
 {
+
+	var background:Bitmap;
 
 	var stratus:NetConnection;
 
@@ -35,6 +43,10 @@ class Lobby extends Frame
 	{
 		
 		super();
+		
+		background=new Bitmap();
+		background.z=-1.0;
+		addChild(background);		
 		
 		this.game_class=game_class;
 		
@@ -183,10 +195,12 @@ class Lobby extends Frame
 		addChild(game.getDisplayObject());
 	}
 
-	private function onGameOver()
+	private function onGameOver(winner:Bool)
 	{
 		
 		var t=this;
+		
+		updateBackground();
 		
 		if(game!=null)
 		{
@@ -197,7 +211,15 @@ class Lobby extends Frame
 		
 		clear();
 		
-		addLabel("Game Over",24);
+		if(winner)
+		{
+			addLabel("Congratulations!",24);
+			addLabel("You found all the mines",16);
+		}
+		else
+		{
+			addLabel("Game Over",24);
+		}
 
 		addLabel("\n",24);
 		
@@ -240,17 +262,6 @@ class Lobby extends Frame
 	}
 
 // UI
-
-	private function clear()
-	{
-		
-		graphics.clear();
-		
-		while(numChildren>0)
-		{
-			removeChildAt(numChildren-1);
-		}
-	}
 
 	private function disableLabel(label:Sprite)
 	{
@@ -348,6 +359,26 @@ class Lobby extends Frame
 //			server.client={};
 //			server.client.onPeerConnect=onPeerConnect;
 		}
+	}
+
+	public function updateBackground()
+	{
+		
+		var bitmap=new BitmapData(Std.int(Main.stage.stageWidth),Std.int(Main.stage.stageHeight));
+
+		bitmap.draw(Main.stage);
+		
+		bitmap.applyFilter(bitmap,bitmap.rect, new Point(0,0), new BlurFilter());
+		bitmap.colorTransform(bitmap.rect, new ColorTransform(0.25,0.25,0.25,1.0,168,168,168,0));
+
+		background.bitmapData=bitmap;
+		
+	}
+
+	override public function clear()
+	{
+		super.clear();
+		addChild(background);
 	}
 
 }

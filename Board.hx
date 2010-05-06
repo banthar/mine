@@ -9,6 +9,7 @@ class Board
 	public var width:Int;
 	public var height:Int;
 	public var mines:Int;
+	public var mines_left:Int;
 	
 	var board:Vector<Field>;
 	
@@ -20,6 +21,7 @@ class Board
 		this.width=w;
 		this.height=h;
 		this.mines=mines;
+		this.mines_left=mines;
 		
 		board=new Vector<Field>(w*h);
 		

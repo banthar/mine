@@ -19,7 +19,9 @@ class BoardView extends Sprite, implements Game
 	
 	var seed:UInt;
 	
-	public dynamic function onGameOver():Void;
+	var start_time:Float;
+	
+	public dynamic function onGameOver(winner:Bool):Void;
 	
 	public function new(input:NetStream,output:NetStream, myPlayer:UInt)
 	{
@@ -32,7 +34,6 @@ class BoardView extends Sprite, implements Game
 
 		input.client.startGame=startGame;
 
-
 		seed=Std.random(2000000000);
 
 		output.send("startGame",seed);
@@ -41,6 +42,8 @@ class BoardView extends Sprite, implements Game
 	
 	private function startGame(seed:UInt)
 	{
+
+		start_time=haxe.Timer.stamp();
 
 		miner=seed>this.seed;
 		
@@ -150,10 +153,20 @@ class BoardView extends Sprite, implements Game
 		return this;
 	}
 
+	public function win()
+	{
+		mouseChildren=false;
+		onGameOver(true);
+		
+		Main.kongregate.submitStat("time",Std.int(haxe.Timer.stamp()-start_time));
+		Main.kongregate.submitStat("cleared_boards",1);
+		
+	}
+
 	public function die()
 	{
 		mouseChildren=false;
-		onGameOver();
+		onGameOver(false);
 	}
 
 	public function destroy()

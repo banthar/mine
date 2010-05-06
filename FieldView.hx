@@ -105,12 +105,27 @@ class FieldView extends Sprite
 			field.flag=true;
 			flag_sprite=Utils.load("flag");
 			addChild(flag_sprite);
+
+			if(field.bomb)
+			{
+				board_view.board.mines_left--;
+				
+				if(board_view.board.mines_left<=0)
+					board_view.win();
+				
+			}
 			
 		}
 		else if(!flag && field.flag)
 		{
 			field.flag=false;
 			removeChild(flag_sprite);
+			
+			if(field.bomb)
+			{
+				board_view.board.mines_left++;
+			}
+			
 		}
 		
 	}
@@ -126,8 +141,8 @@ class FieldView extends Sprite
 		
 		if(field.bomb)
 		{
-			board_view.die();
 			addChild(Utils.load("mine"));
+			board_view.die();
 		}
 		else if(field.neighbours!=0)
 		{
