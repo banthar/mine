@@ -14,6 +14,7 @@ class FieldView extends Sprite
 	public var ypos:Int;
 
 	private var flag_sprite:DisplayObject;
+	private var flag_over_sprite:DisplayObject;
 
 	public function new(board_view:BoardView,x:Int,y:Int)
 	{
@@ -38,7 +39,11 @@ class FieldView extends Sprite
 		}
 		else
 		{
-			addEventListener(MouseEvent.CLICK,onMouseWhell);
+			addEventListener(MouseEvent.CLICK,onFlag);
+
+			addEventListener(MouseEvent.MOUSE_OVER,onFlagOver);
+			addEventListener(MouseEvent.MOUSE_OUT,onFlagOut);
+
 		}
 
 
@@ -53,7 +58,33 @@ class FieldView extends Sprite
 		}
 	}
 
-	public function onMouseWhell(e:MouseEvent)
+	public function onFlagOver(e:MouseEvent)
+	{
+		
+		onFlagOut(null);
+
+		if(field.flag || field.clicked)
+			return;
+		
+		
+		flag_over_sprite=Utils.load("flag");
+		
+		flag_over_sprite.alpha=0.25;
+		
+		addChild(flag_over_sprite);
+		
+	}
+
+	public function onFlagOut(e:MouseEvent)
+	{
+		if(flag_over_sprite!=null)
+		{
+			removeChild(flag_over_sprite);
+			flag_over_sprite=null;
+		}
+	}
+
+	public function onFlag(e:MouseEvent)
 	{
 		board_view.onFlagClick(xpos,ypos);
 	}
