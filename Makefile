@@ -23,8 +23,8 @@ data/images.swf: data/images.svg data/images.xml
 assets.swf: $(ASSETS) data/images.swf resources.xml
 	SamHaXe resources.xml assets.swf
 
-run: $(OUTPUT)_debug.swf.swf
-	flashplayer $(OUTPUT)-debug.swf.swf
+run: $(OUTPUT)_debug.swf
+	flashplayer $(OUTPUT)_debug.swf
 
 clean:
 	rm -rf assets.swf data/images.swf
